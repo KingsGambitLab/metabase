@@ -7,7 +7,11 @@ import type {
 import type { PickerState } from "../EntityPicker";
 import type { QuestionPickerItem } from "../QuestionPicker";
 
-import type { CollectionPickerItem, CollectionPickerStatePath } from "./types";
+import type {
+  CollectionPickerItem,
+  CollectionPickerModel,
+  CollectionPickerStatePath,
+} from "./types";
 
 export const getCollectionIdPath = (
   collection: Pick<
@@ -51,9 +55,11 @@ export const getCollectionIdPath = (
 export const getStateFromIdPath = ({
   idPath,
   namespace,
+  models,
 }: {
   idPath: CollectionId[];
   namespace?: "snippets";
+  models: CollectionPickerModel[];
 }): CollectionPickerStatePath => {
   const statePath: PickerState<
     CollectionPickerItem,
@@ -76,7 +82,7 @@ export const getStateFromIdPath = ({
     statePath.push({
       query: {
         id,
-        models: ["collection"],
+        models,
         namespace,
       },
       selectedItem: nextLevelId

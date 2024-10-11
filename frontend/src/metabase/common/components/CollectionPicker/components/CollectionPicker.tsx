@@ -9,10 +9,15 @@ import { useSelector } from "metabase/lib/redux";
 import { getUserPersonalCollectionId } from "metabase/selectors/user";
 import type { Collection } from "metabase-types/api";
 
-import { LoadingSpinner, NestedItemPicker } from "../../EntityPicker";
+import {
+  LoadingSpinner,
+  NestedItemPicker,
+  type PickerState,
+} from "../../EntityPicker";
 import { useEnsureCollectionSelected } from "../hooks";
 import type {
   CollectionPickerItem,
+  CollectionPickerModel,
   CollectionPickerOptions,
   CollectionPickerStatePath,
 } from "../types";
@@ -39,6 +44,7 @@ interface CollectionPickerProps {
   onInit: (item: CollectionPickerItem) => void;
   onItemSelect: (item: CollectionPickerItem) => void;
   onPathChange: (path: CollectionPickerStatePath) => void;
+  models?: CollectionPickerModel[];
 }
 
 export const CollectionPickerInner = (
@@ -50,6 +56,7 @@ export const CollectionPickerInner = (
     onInit,
     onItemSelect,
     onPathChange,
+    models = ["collection"],
   }: CollectionPickerProps,
   ref: Ref<unknown>,
 ) => {
@@ -57,6 +64,7 @@ export const CollectionPickerInner = (
     return getStateFromIdPath({
       idPath: ["root"],
       namespace: options.namespace,
+      models,
     });
   }, [options.namespace]);
   const path = pathProp ?? defaultPath;
@@ -84,6 +92,7 @@ export const CollectionPickerInner = (
           isUserSubfolder,
         ),
         namespace: options.namespace,
+        models,
       });
       onItemSelect(folder);
       onPathChange(newPath);
@@ -94,6 +103,7 @@ export const CollectionPickerInner = (
       options.namespace,
       userPersonalCollectionId,
       path,
+      models,
     ],
   );
 
@@ -176,6 +186,7 @@ export const CollectionPickerInner = (
             userPersonalCollectionId,
           ),
           namespace: options.namespace,
+          models,
         });
         onPathChange(newPath);
 
