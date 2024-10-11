@@ -231,7 +231,7 @@ export const QuestionActions = ({
     });
   }
 
-  if (hasCollectionPermissions && !isDashboardQuestion) {
+  if (hasCollectionPermissions) {
     extraButtons.push({
       separator: true,
       key: "trash-separator",
