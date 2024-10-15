@@ -309,6 +309,7 @@ export interface UpdateCardRequest {
   result_metadata?: Field[];
   cache_ttl?: number;
   collection_preview?: boolean;
+  delete_old_dashcards?: boolean;
 }
 
 export type UpdateCardKeyRequest<PropertyKey extends keyof UpdateCardRequest> =
