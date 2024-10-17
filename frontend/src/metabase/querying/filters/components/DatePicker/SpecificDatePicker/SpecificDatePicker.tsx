@@ -33,8 +33,8 @@ interface SpecificDatePickerProps {
 export function SpecificDatePicker({
   value: initialValue,
   availableOperators,
-  isTimeSupported,
   isNew,
+  isTimeSupported,
   onChange,
   onBack,
 }: SpecificDatePickerProps) {
