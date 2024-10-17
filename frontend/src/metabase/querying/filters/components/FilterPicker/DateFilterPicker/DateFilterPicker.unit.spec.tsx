@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { renderWithProviders, screen } from "__support__/ui";
 import { checkNotNull } from "metabase/lib/types";
 import * as Lib from "metabase-lib";
+import { columnFinder } from "metabase-lib/test-helpers";
 
 import {
   createQuery,
@@ -220,5 +221,39 @@ describe("DateFilterPicker", () => {
       values: [3, 5],
       bucket: "day-of-week",
     });
+  });
+
+  it("should allow to add time for a datetime column", async () => {
+    const findColumn = columnFinder(
+      initialQuery,
+      Lib.filterableColumns(initialQuery, -1),
+    );
+    setup({
+      query: initialQuery,
+      column: findColumn("PEOPLE", "CREATED_AT"),
+      isNew: true,
+    });
+
+    await userEvent.click(screen.getByText("Specific dates…"));
+    await userEvent.click(screen.getByText("On"));
+
+    expect(screen.getByText("Add time")).toBeInTheDocument();
+  });
+
+  it("should not allow to add time for a date only column", async () => {
+    const findColumn = columnFinder(
+      initialQuery,
+      Lib.filterableColumns(initialQuery, -1),
+    );
+    setup({
+      query: initialQuery,
+      column: findColumn("PEOPLE", "BIRTH_DATE"),
+      isNew: true,
+    });
+
+    await userEvent.click(screen.getByText("Specific dates…"));
+    await userEvent.click(screen.getByText("On"));
+
+    expect(screen.queryByText("Add time")).not.toBeInTheDocument();
   });
 });
