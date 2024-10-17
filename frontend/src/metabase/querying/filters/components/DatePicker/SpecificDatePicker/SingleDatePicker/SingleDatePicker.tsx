@@ -11,16 +11,16 @@ import type { SingleDatePickerValue } from "./types";
 
 interface SingleDatePickerProps {
   value: SingleDatePickerValue;
-  canSetTime: boolean;
   isNew: boolean;
+  isTimeSupported: boolean;
   onChange: (value: SingleDatePickerValue) => void;
   onSubmit: () => void;
 }
 
 export function SingleDatePicker({
   value: { date, hasTime },
-  canSetTime,
   isNew,
+  isTimeSupported,
   onChange,
   onSubmit,
 }: SingleDatePickerProps) {
@@ -47,8 +47,8 @@ export function SingleDatePicker({
         />
       </Box>
       <Divider />
-      <Group p="sm" position={canSetTime ? "apart" : "right"}>
-        {canSetTime && (
+      <Group p="sm" position={isTimeSupported ? "apart" : "right"}>
+        {isTimeSupported && (
           <TimeToggle hasTime={hasTime} onClick={handleTimeToggle} />
         )}
         <Button variant="filled" type="submit">

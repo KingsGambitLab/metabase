@@ -20,7 +20,7 @@ function getDefaultValue(
 interface SetupOpts {
   value: DateIntervalValue;
   isNew?: boolean;
-  canSetRelativeOffset?: boolean;
+  isRelativeOffsetSupported?: boolean;
 }
 
 function setup({ value }: SetupOpts) {

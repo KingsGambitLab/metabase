@@ -27,7 +27,7 @@ import { setDefaultOffset, setUnit } from "./utils";
 interface DateIntervalPickerProps {
   value: DateIntervalValue;
   isNew: boolean;
-  canSetRelativeOffset: boolean;
+  isRelativeOffsetSupported: boolean;
   onChange: (value: DateIntervalValue) => void;
   onSubmit: () => void;
 }
@@ -35,7 +35,7 @@ interface DateIntervalPickerProps {
 export function DateIntervalPicker({
   value,
   isNew,
-  canSetRelativeOffset,
+  isRelativeOffsetSupported,
   onChange,
   onSubmit,
 }: DateIntervalPickerProps) {
@@ -81,7 +81,7 @@ export function DateIntervalPicker({
           ml="md"
           onChange={handleUnitChange}
         />
-        {canSetRelativeOffset && (
+        {isRelativeOffsetSupported && (
           <Tooltip label={t`Starting from…`} position="bottom">
             <Button
               aria-label={t`Starting from…`}

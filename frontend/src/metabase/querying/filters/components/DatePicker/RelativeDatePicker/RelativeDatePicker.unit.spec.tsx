@@ -11,13 +11,13 @@ const TAB_CASES = TABS.flatMap(fromTab => TABS.map(toTab => [fromTab, toTab]));
 
 interface SetupOpts {
   value?: RelativeDatePickerValue;
-  canSetRelativeOffset?: boolean;
+  isRelativeOffsetSupported?: boolean;
   isNew?: boolean;
 }
 
 function setup({
   value,
-  canSetRelativeOffset = false,
+  isRelativeOffsetSupported = false,
   isNew = false,
 }: SetupOpts = {}) {
   const onChange = jest.fn();
@@ -26,7 +26,7 @@ function setup({
   renderWithProviders(
     <RelativeDatePicker
       value={value}
-      canSetRelativeOffset={canSetRelativeOffset}
+      isRelativeOffsetSupported={isRelativeOffsetSupported}
       isNew={isNew}
       onChange={onChange}
       onBack={onBack}
@@ -66,7 +66,7 @@ describe("RelativeDatePicker", () => {
 
   it("should not lose offset values when navigating from Past to Next tab", async () => {
     setup({
-      canSetRelativeOffset: true,
+      isRelativeOffsetSupported: true,
     });
 
     await userEvent.click(await screen.findByLabelText("Starting from…"));
@@ -109,7 +109,7 @@ describe("RelativeDatePicker", () => {
 
   it("should allow to submit a past value with an offset", async () => {
     const { onChange } = setup({
-      canSetRelativeOffset: true,
+      isRelativeOffsetSupported: true,
     });
 
     await userEvent.click(await screen.findByLabelText("Starting from…"));
@@ -143,7 +143,7 @@ describe("RelativeDatePicker", () => {
 
   it("should allow to submit a next value with an offset", async () => {
     const { onChange } = setup({
-      canSetRelativeOffset: true,
+      isRelativeOffsetSupported: true,
     });
 
     await userEvent.click(screen.getByText("Next"));

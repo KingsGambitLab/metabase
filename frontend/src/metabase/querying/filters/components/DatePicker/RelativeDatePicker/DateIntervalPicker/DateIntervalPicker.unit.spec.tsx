@@ -20,13 +20,13 @@ function getDefaultValue(
 interface SetupOpts {
   value: DateIntervalValue;
   isNew?: boolean;
-  canSetRelativeOffset?: boolean;
+  isRelativeOffsetSupported?: boolean;
 }
 
 function setup({
   value,
   isNew = false,
-  canSetRelativeOffset = false,
+  isRelativeOffsetSupported = false,
 }: SetupOpts) {
   const onChange = jest.fn();
   const onSubmit = jest.fn();
@@ -35,7 +35,7 @@ function setup({
     <DateIntervalPicker
       value={value}
       isNew={isNew}
-      canSetRelativeOffset={canSetRelativeOffset}
+      isRelativeOffsetSupported={isRelativeOffsetSupported}
       onChange={onChange}
       onSubmit={onSubmit}
     />,
@@ -170,7 +170,7 @@ describe("DateIntervalPicker", () => {
       it("should allow to a relative offset", async () => {
         const { onChange, onSubmit } = setup({
           value: defaultValue,
-          canSetRelativeOffset: true,
+          isRelativeOffsetSupported: true,
         });
 
         await userEvent.click(await screen.findByLabelText("Starting from…"));
