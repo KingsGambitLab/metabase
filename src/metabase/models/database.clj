@@ -169,6 +169,9 @@
   (u/prog1 database
     (set-new-database-permissions! database)
     ;; schedule the Database sync & analyze tasks
+    ;; This will not do anything when coming from [[metabase-enterprise.advanced-config.file/initialize!]],
+    ;; since the scheduler will not be up yet.
+    ;; We call [[metabase.task.sync-databases/check-and-schedule-tasks!]] from [[metabase.core/init!]] to self-heal.
     (check-and-schedule-tasks-for-db! (t2.realize/realize database))))
 
 (def ^:private ^:dynamic *normalizing-details*
@@ -319,6 +322,9 @@
 
 (t2/define-after-update :model/Database
   [database]
+  ;; This will not do anything when coming from [[metabase-enterprise.advanced-config.file/initialize!]],
+  ;; since the scheduler will not be up yet.
+  ;; We call [[metabase.task.sync-databases/check-and-schedule-tasks!]] from [[metabase.core/init!]] to self-heal.
   (check-and-schedule-tasks-for-db! (t2.realize/realize database)))
 
 (t2/define-before-insert :model/Database

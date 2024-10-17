@@ -29,6 +29,7 @@
    [metabase.server.handler :as handler]
    [metabase.setup :as setup]
    [metabase.task :as task]
+   [metabase.task.sync-databases :as sync-databases]
    [metabase.troubleshooting :as troubleshooting]
    [metabase.util :as u]
    [metabase.util.log :as log])
@@ -163,6 +164,8 @@
   (settings/migrate-encrypted-settings!)
   ;; start scheduler at end of init!
   (task/start-scheduler!)
+  ;; In case we could not do this earlier, because the scheduler was not up yet:
+  (sync-databases/check-and-schedule-tasks!)
   ;; load the channels
   (channel/find-and-load-metabase-channels!)
   (init-status/set-complete!)

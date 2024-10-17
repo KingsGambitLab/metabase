@@ -306,6 +306,12 @@
     (doseq [task all-tasks]
       (update-db-trigger-if-needed! database task))))
 
+(defn check-and-schedule-tasks!
+  "Schedule a new Quartz job for all databases if it does not already exists."
+  []
+  (doseq [database (t2/select Database)]
+    (metabase.task.sync-databases/check-and-schedule-tasks-for-db! database)))
+
 ;;; +----------------------------------------------------------------------------------------------------------------+
 ;;; |                                              TASK INITIALIZATION                                               |
 ;;; +----------------------------------------------------------------------------------------------------------------+
