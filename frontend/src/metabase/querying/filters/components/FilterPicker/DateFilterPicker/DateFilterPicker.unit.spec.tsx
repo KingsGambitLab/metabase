@@ -73,6 +73,10 @@ function setup({ query, column, filter, isNew = false }: SetupOpts) {
 
 describe("DateFilterPicker", () => {
   const initialQuery = createQuery();
+  const findColumn = columnFinder(
+    initialQuery,
+    Lib.filterableColumns(initialQuery, -1),
+  );
   const column = findDateTimeColumn(initialQuery);
 
   it("should add a filter via shortcut", async () => {
@@ -224,10 +228,6 @@ describe("DateFilterPicker", () => {
   });
 
   it("should allow to add time for a datetime column", async () => {
-    const findColumn = columnFinder(
-      initialQuery,
-      Lib.filterableColumns(initialQuery, -1),
-    );
     setup({
       query: initialQuery,
       column: findColumn("PEOPLE", "CREATED_AT"),
@@ -241,10 +241,6 @@ describe("DateFilterPicker", () => {
   });
 
   it("should not allow to add time for a date only column", async () => {
-    const findColumn = columnFinder(
-      initialQuery,
-      Lib.filterableColumns(initialQuery, -1),
-    );
     setup({
       query: initialQuery,
       column: findColumn("PEOPLE", "BIRTH_DATE"),
