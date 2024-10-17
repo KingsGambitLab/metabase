@@ -24,7 +24,7 @@ export function DateFilterPicker({
     value,
     availableOperators,
     availableUnits,
-    isTimeSupported,
+    canSetTime,
     getFilterClause,
   } = useDateFilter({
     query,
@@ -50,8 +50,8 @@ export function DateFilterPicker({
             </PopoverBackButton>
           )
         }
-        isTimeSupported={isTimeSupported}
-        isRelativeOffsetSupported
+        canSetTime={canSetTime}
+        canSetRelativeOffset
         isNew={isNew}
         onChange={handleChange}
       />

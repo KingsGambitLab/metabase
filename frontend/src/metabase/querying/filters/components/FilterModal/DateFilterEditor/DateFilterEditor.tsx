@@ -37,7 +37,7 @@ export function DateFilterEditor({
     value,
     availableOperators,
     availableUnits,
-    isTimeSupported,
+    canSetTime,
     getFilterClause,
   } = useDateFilter({
     query,
@@ -95,7 +95,7 @@ export function DateFilterEditor({
               availableOperators={availableOperators}
               availableUnits={availableUnits}
               isExpanded={visibleOptions.length === 0}
-              isTimeSupported={isTimeSupported}
+              canSetTime={canSetTime}
               onChange={handleChange}
             />
           </Flex>
@@ -111,7 +111,7 @@ interface DateFilterPopoverProps {
   availableOperators: ReadonlyArray<DatePickerOperator>;
   availableUnits: ReadonlyArray<DatePickerExtractionUnit>;
   isExpanded: boolean;
-  isTimeSupported: boolean;
+  canSetTime: boolean;
   onChange: (value: DatePickerValue | undefined) => void;
 }
 
@@ -120,7 +120,7 @@ function DateFilterPopover({
   value,
   availableOperators,
   availableUnits,
-  isTimeSupported,
+  canSetTime,
   isExpanded,
   onChange,
 }: DateFilterPopoverProps) {
@@ -168,8 +168,8 @@ function DateFilterPopover({
           availableOperators={availableOperators}
           availableShortcuts={isExpanded ? undefined : SECONDARY_SHORTCUTS}
           availableUnits={availableUnits}
-          isTimeSupported={isTimeSupported}
-          isRelativeOffsetSupported
+          canSetTime={canSetTime}
+          canSetRelativeOffset
           onChange={handleChange}
         />
       </Popover.Dropdown>

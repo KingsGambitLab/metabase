@@ -40,7 +40,7 @@ export function useDateFilter({
     value,
     availableOperators,
     availableUnits,
-    isTimeSupported: !Lib.isDateWithoutTime(column),
+    canSetTime: !Lib.isDateWithoutTime(column),
     getFilterClause: (value: DatePickerValue) =>
       getFilterClause(query, stageIndex, column, value),
   };

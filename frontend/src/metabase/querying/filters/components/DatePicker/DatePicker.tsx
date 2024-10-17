@@ -23,8 +23,8 @@ interface DatePickerProps {
   availableShortcuts?: ReadonlyArray<DatePickerShortcut>;
   availableUnits?: ReadonlyArray<DatePickerExtractionUnit>;
   isNew?: boolean;
-  isTimeSupported?: boolean;
-  isRelativeOffsetSupported?: boolean;
+  canSetTime?: boolean;
+  canSetRelativeOffset?: boolean;
   backButton?: ReactNode;
   onChange: (value: DatePickerValue) => void;
 }
@@ -35,8 +35,8 @@ export function DatePicker({
   availableShortcuts = DATE_PICKER_SHORTCUTS,
   availableUnits = DATE_PICKER_EXTRACTION_UNITS,
   isNew = value == null,
-  isTimeSupported = false,
-  isRelativeOffsetSupported = false,
+  canSetTime = false,
+  canSetRelativeOffset = false,
   backButton,
   onChange,
 }: DatePickerProps) {
@@ -53,7 +53,7 @@ export function DatePicker({
           value={value?.type === type ? value : undefined}
           availableOperators={availableOperators}
           isNew={isNew}
-          isTimeSupported={isTimeSupported}
+          canSetTime={canSetTime}
           onChange={onChange}
           onBack={handleBack}
         />
@@ -63,7 +63,7 @@ export function DatePicker({
         <RelativeDatePicker
           value={value?.type === type ? value : undefined}
           isNew={isNew}
-          isRelativeOffsetSupported={isRelativeOffsetSupported}
+          canSetRelativeOffset={canSetRelativeOffset}
           onChange={onChange}
           onBack={handleBack}
         />
