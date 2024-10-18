@@ -2,6 +2,7 @@
   "/api/permissions endpoints."
   (:require [clojure.spec.alpha :as s]
             [compojure.core :refer [DELETE GET POST PUT]]
+            [clojure.tools.logging :as log]
             [honeysql.helpers :as hh]
             [metabase.api.common :as api]
             [metabase.api.common.validation :as validation]
@@ -179,6 +180,7 @@
       (api/check
        (db/exists? User :id user_id :is_superuser false)
        [400 (tru "Admin cant be a group manager.")]))
+    (log/debug "PERMISSION_MEMBERSHIP_CREATED : AUTHOR: %s : USER_AFFECTED : %s : GROUP : %s" (api/*current-user-id*) (user_id) (group_id))
     (db/insert! PermissionsGroupMembership
                 :group_id         group_id
                 :user_id          user_id
@@ -211,6 +213,7 @@
   (let [membership (db/select-one PermissionsGroupMembership :id id)]
     (api/check-404 membership)
     (validation/check-manager-of-group (:group_id membership))
+    (log/debug "PERMISSION_MEMBERSHIP_REMOVED : AUTHOR: %s : USER_AFFECTED : %s : GROUP : %s" (api/*current-user-id*) (:user_id membership) (:group_id membership))
     (db/delete! PermissionsGroupMembership :id id)
     api/generic-204-no-content))
 
