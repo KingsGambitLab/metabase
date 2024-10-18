@@ -25,6 +25,7 @@ export function DateRangePicker({
   onSubmit,
 }: DateRangePickerProps) {
   const [startDate, endDate] = dateRange;
+  const hasTimeToggle = hasTime || canSetTime;
 
   const handleDateRangeChange = (newDateRange: [Date, Date]) => {
     onChange({ dateRange: newDateRange, hasTime });
@@ -52,8 +53,8 @@ export function DateRangePicker({
         />
       </Box>
       <Divider />
-      <Group p="sm" position={canSetTime ? "apart" : "right"}>
-        {canSetTime && (
+      <Group p="sm" position={hasTimeToggle ? "apart" : "right"}>
+        {hasTimeToggle && (
           <TimeToggle hasTime={hasTime} onClick={handleTimeToggle} />
         )}
         <Button variant="filled" type="submit">

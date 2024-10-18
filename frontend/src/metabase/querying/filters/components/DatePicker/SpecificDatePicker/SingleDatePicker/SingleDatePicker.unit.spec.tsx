@@ -157,4 +157,18 @@ describe("SingleDatePicker", () => {
     });
     expect(screen.queryByText("Add time")).not.toBeInTheDocument();
   });
+
+  it("should allow to remove time when it was previously set but not supported now", async () => {
+    const { onChange } = setup({
+      value: { date: DATE_TIME, hasTime: true },
+      canSetTime: false,
+    });
+
+    await userEvent.click(screen.getByText("Remove time"));
+
+    expect(onChange).toHaveBeenLastCalledWith({
+      date: new Date(2020, 0, 10),
+      hasTime: false,
+    });
+  });
 });

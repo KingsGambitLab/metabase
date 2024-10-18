@@ -24,6 +24,8 @@ export function SingleDatePicker({
   onChange,
   onSubmit,
 }: SingleDatePickerProps) {
+  const hasTimeToggle = hasTime || canSetTime;
+
   const handleDateChange = (newDate: Date) => {
     onChange({ date: newDate, hasTime });
   };
@@ -47,8 +49,8 @@ export function SingleDatePicker({
         />
       </Box>
       <Divider />
-      <Group p="sm" position={canSetTime ? "apart" : "right"}>
-        {canSetTime && (
+      <Group p="sm" position={hasTimeToggle ? "apart" : "right"}>
+        {hasTimeToggle && (
           <TimeToggle hasTime={hasTime} onClick={handleTimeToggle} />
         )}
         <Button variant="filled" type="submit">
